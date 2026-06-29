@@ -1,4 +1,4 @@
-# app
+# Tablemind
 
 A new Flutter project.
 
