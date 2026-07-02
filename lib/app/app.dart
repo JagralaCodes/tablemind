@@ -17,7 +17,7 @@ class TablemindApp extends ConsumerWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         appBarTheme: AppBarTheme(backgroundColor: Colors.white, elevation: 0),
         useMaterial3: true,
-        fontFamily: 'Antic',
+        fontFamily: 'Comfortaa',
         textTheme: TextTheme(
           bodyMedium: TextStyle(color: Colors.grey[700]),
           headlineMedium: TextStyle(color: Colors.black),

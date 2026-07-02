@@ -38,14 +38,13 @@ class _SplitActionButtonState extends State<SplitActionButton> {
     final Color rightFg = _isRightPressed ? Colors.white : Colors.black;
 
     return Container(
-      height: 80,
-      margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      height: 100,
+      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.black, width: 1),
       ),
       child: Row(
         children: [
-          // --- 80% LEFT SIDE ---
           Expanded(
             flex: 8,
             child: Material(
@@ -66,32 +65,35 @@ class _SplitActionButtonState extends State<SplitActionButton> {
                       padding: const EdgeInsets.all(24.0),
                       child: Icon(widget.mainIcon, size: 22, color: mainFg),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          widget.mainLabel,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: mainFg,
-                            letterSpacing: 1,
-                          ),
-                        ),
-                        if (widget.subLabel != null)
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                           Text(
-                            widget.subLabel!,
+                            widget.mainLabel,
                             style: TextStyle(
-                              color: _isMainPressed
-                                  ? Colors.white70
-                                  : Colors.grey,
-                              fontSize: 12,
+                              overflow: TextOverflow.ellipsis,
+                              fontSize: 14,
                               fontWeight: FontWeight.w700,
+                              color: mainFg,
                               letterSpacing: 1,
                             ),
                           ),
-                      ],
+                          if (widget.subLabel != null)
+                            Text(
+                              widget.subLabel!,
+                              style: TextStyle(
+                                color: _isMainPressed
+                                    ? Colors.white70
+                                    : Colors.grey,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -99,9 +101,8 @@ class _SplitActionButtonState extends State<SplitActionButton> {
             ),
           ),
 
-          // --- 20% RIGHT SIDE (With its own independent flash) ---
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Material(
               color: rightBg, // Changes instantly on tap down
               child: InkWell(

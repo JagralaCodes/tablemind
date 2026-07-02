@@ -7,4 +7,5 @@ class AppRoutes {
   static const String profile = '/profile';
   static const String preview = '/preview';
   static const String scanner = '/scanner';
+  static const String loading = '/loading';
 }

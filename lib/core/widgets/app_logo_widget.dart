@@ -9,16 +9,19 @@ class AppLogoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: color ?? Colors.white, width: 1.0),
+        border: Border.all(
+          color: color?.withAlpha(100) ?? Colors.white,
+          width: 0.8,
+        ),
       ),
       height: width,
       width: width,
-      padding: EdgeInsets.all(width * .15),
+      padding: EdgeInsets.all(width * .2),
       child: Container(
         decoration: BoxDecoration(
           color: color ?? Colors.white,
           borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(width * .33),
+            bottomRight: Radius.circular(width * .2),
           ),
         ),
       ),

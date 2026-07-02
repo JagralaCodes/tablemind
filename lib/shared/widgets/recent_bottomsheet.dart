@@ -11,40 +11,30 @@ class RecentBar extends StatelessWidget {
       onTap: onTap, // Just opens the sheet
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 14),
+        padding: const EdgeInsets.symmetric(vertical: 24),
         decoration: const BoxDecoration(
           border: Border(top: BorderSide(color: Colors.black12, width: 1)),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.history_rounded,
-                  size: 14,
-                  color: Colors.grey.shade500,
-                ),
-                const SizedBox(width: 6),
-                Text(
-                  "RECENT",
-                  style: TextStyle(
-                    fontSize: 14,
-                    letterSpacing: 2.2,
-                    color: Colors.grey.shade500,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Icon(
-                  Icons.keyboard_arrow_up_rounded,
-                  size: 18,
-                  color: Colors.grey.shade500,
-                ),
-              ],
+            Icon(Icons.history_rounded, size: 14, color: Colors.grey.shade500),
+            const SizedBox(width: 6),
+            Text(
+              "RECENT",
+              style: TextStyle(
+                fontSize: 14,
+                letterSpacing: 2.2,
+                color: Colors.grey.shade500,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(width: 6),
+            Icon(
+              Icons.keyboard_arrow_up_rounded,
+              size: 18,
+              color: Colors.grey.shade500,
+            ),
           ],
         ),
       ),
