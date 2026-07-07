@@ -56,11 +56,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             SizedBox(height: 10),
             Text(
               "Tablemind",
-              style: TextStyle(
-                fontFamily: "Antic",
-                color: Colors.white,
-                fontSize: 30,
-              ),
+              style: TextStyle(color: Colors.white, fontSize: 30),
             ),
             AnimatedCrossFade(
               firstChild: Container(color: Colors.white60, width: 0, height: 0),

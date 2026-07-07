@@ -26,6 +26,7 @@ class HomeRepositoryImpl implements HomeRepository {
   Future<List<String?>> pickFileFromStorage() async {
     try {
       final FilePickerResult? result = await FilePicker.pickFiles(
+        allowMultiple: true,
         type: FileType.custom,
         allowedExtensions: [
           'pdf',
@@ -38,7 +39,34 @@ class HomeRepositoryImpl implements HomeRepository {
           'json',
         ],
       );
-      return result != null ? result.files.map((e) => e.path).toList() : [];
+
+      if (result == null) return [];
+
+      final paths = result.files
+          .map((e) => e.path)
+          .whereType<String>()
+          .toList();
+
+      List<String> images = [];
+      List<String> docs = [];
+
+      for (var path in paths) {
+        final lower = path.toLowerCase();
+        if (lower.endsWith('.jpg') ||
+            lower.endsWith('.jpeg') ||
+            lower.endsWith('.png')) {
+          images.add(path);
+        } else {
+          docs.add(path);
+        }
+      }
+
+      // Keep only one document if multiple were selected
+      if (docs.length > 1) {
+        docs = [docs.first];
+      }
+
+      return [...images, ...docs];
     } catch (e) {
       throw Exception(e.toString());
     }

@@ -6,6 +6,7 @@ class AppRoutes {
   static const String favorite = '/favorite';
   static const String profile = '/profile';
   static const String preview = '/preview';
+  static const String upload = '/upload';
   static const String scanner = '/scanner';
   static const String loading = '/loading';
 }

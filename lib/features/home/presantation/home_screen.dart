@@ -1,8 +1,11 @@
 import 'package:app/core/widgets/app_logo_widget.dart';
 import 'package:app/shared/widgets/link_menu_bottom_sheet.dart';
+import '../domain/home_view_model.dart';
 import 'package:app/shared/widgets/recent_bottomsheet.dart';
+import 'package:app/app/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/widgets/split_action_button.dart';
 
@@ -79,8 +82,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               subLabel: "& Upload",
               mainIcon: Icons.camera_alt_outlined,
               rightIcon: Icons.upload_file,
-              onMainTap: () {},
-              onRightTap: () {},
+              onMainTap: () {
+                ref.read(homeViewModelProvider.notifier).onCameraTap();
+              },
+              onRightTap: () {
+                ref.read(homeViewModelProvider.notifier).onFilePickerTap();
+              },
             ),
 
             // Button 2: Link (starts white)
@@ -96,7 +103,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   builder: (context) => const LinkMenuBottomSheet(),
                 );
               },
-              onRightTap: () {},
+              onRightTap: () {
+                context.push(AppRoutes.scanner);
+              },
             ),
 
             // Button 3: Search Restaurant
@@ -104,8 +113,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               mainLabel: "Search Restaurant",
               mainIcon: Icons.search_rounded,
               rightIcon: Icons.arrow_forward_rounded,
-              onMainTap: () {},
-              onRightTap: () {},
+              onMainTap: () {
+                context.push(AppRoutes.search);
+              },
+              onRightTap: () {
+                context.push(AppRoutes.search);
+              },
             ),
 
             const Spacer(),
