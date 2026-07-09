@@ -1,8 +1,17 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import 'package:app/app/routes.dart';
 import '../domain/upload_view_model.dart';
+
+/// OCR (ML Kit) only works on actual images — a .pdf or .docx in the
+/// carousel can't be fed to `InputImage.fromFilePath`. This is a UI-layer
+/// concern (deciding what's "processable"), not something the ViewModel
+/// or UseCase needs to know about, so it lives right here next to the
+/// button that uses it.
+const _ocrCompatibleExtensions = ['jpg', 'jpeg', 'png'];
 
 class UploadPage extends ConsumerStatefulWidget {
   final List<String> initialPaths;
@@ -167,40 +176,22 @@ class _UploadPageState extends ConsumerState<UploadPage> {
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () => _showAddDialog(viewModel),
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.grey[300]!),
-                            color: Colors.transparent,
-                          ),
-                          child: const Icon(
-                            Icons.add,
-                            color: Colors.black,
-                            size: 20,
-                          ),
-                        ),
+                  GestureDetector(
+                    onTap: () => _showAddDialog(viewModel),
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.grey[300]!),
+                        color: Colors.transparent,
                       ),
-                      const SizedBox(width: 12),
-                      Container(
-                        width: 40,
-                        height: 40,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.black,
-                        ),
-                        child: const Icon(
-                          Icons.person_outline,
-                          color: Colors.white,
-                          size: 20,
-                        ),
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.black,
+                        size: 22,
                       ),
-                    ],
+                    ),
                   ),
                 ],
               ),
@@ -322,9 +313,27 @@ class _UploadPageState extends ConsumerState<UploadPage> {
                 onTap: paths.isEmpty
                     ? null
                     : () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Processing...')),
-                        );
+                        final imagePaths = paths
+                            .where(
+                              (p) => _ocrCompatibleExtensions.contains(
+                                p.split('.').last.toLowerCase(),
+                              ),
+                            )
+                            .toList();
+
+                        if (imagePaths.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Add at least one JPG or PNG photo to scan. '
+                                'PDF/Word files aren\'t scanned yet.',
+                              ),
+                            ),
+                          );
+                          return;
+                        }
+
+                        context.push(AppRoutes.processing, extra: imagePaths);
                       },
                 child: Container(
                   padding: const EdgeInsets.symmetric(

@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../upload/domain/upload_args.dart';
+
 final homeRepositoryProvider = Provider<HomeRepository>((ref) {
   return HomeRepositoryImpl();
 });
@@ -34,7 +36,7 @@ class HomeViewModel extends StateNotifier<void> {
     if (validPaths.isNotEmpty) {
       _route.push(
         AppRoutes.upload,
-        extra: {'paths': validPaths, 'source': 'camera'},
+        extra: UploadArgs(paths: validPaths, source: 'camera'),
       );
     }
   }
@@ -46,7 +48,7 @@ class HomeViewModel extends StateNotifier<void> {
     if (validPaths.isNotEmpty) {
       _route.push(
         AppRoutes.upload,
-        extra: {'paths': validPaths, 'source': 'gallery'},
+        extra: UploadArgs(paths: validPaths, source: 'gallery'),
       );
     }
   }

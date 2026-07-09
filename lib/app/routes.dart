@@ -8,5 +8,5 @@ class AppRoutes {
   static const String preview = '/preview';
   static const String upload = '/upload';
   static const String scanner = '/scanner';
-  static const String loading = '/loading';
+  static const String processing = '/processing';
 }
